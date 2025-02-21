@@ -31,6 +31,7 @@ const collection = client.db("MyToDoApp").collection("AllTasks");
 //     category : "InProgress"
 // }
 // collection.insertOne(task)
+{/* <div class="flex h-8 w-8 absolute"><span class="animate-ping absolute h-8 w-8 -top-4 -left-4 rounded-full bg-gray-200 opacity-75"></span><span class="relative rounded-full h-8 w-8 -top-4 -left-4 bg-gray-200"></span></div> */}
 
 
 app.get("/", async(req,res)=>{
