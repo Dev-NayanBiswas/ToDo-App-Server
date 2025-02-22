@@ -22,6 +22,7 @@ const client = new MongoClient(uri, {
 });
 
 const collection = client.db("MyToDoApp").collection("AllTasks");
+const users = client.db("MyToDoApp").collection("Users");
 
 app.get("/tasks",async(req, res)=>{
   const {category} = req.query;
@@ -32,6 +33,20 @@ app.get("/tasks",async(req, res)=>{
   const result = (await collection.find(filter).toArray());
   res.status(200).send({message:"Category ToDos fetched", result})
 });
+
+
+app.post("/user/:email", async(req,res)=>{
+  const {email} = req.params;
+  const user = req.body;
+  // console.log(user, email);
+  const existUser = await users.findOne({email:email});
+  if(!existUser){
+    const result = await users.insertOne(user);
+    res.status(200).send({message:"User Added on Database", result})
+  }else{
+    return;
+  }; 
+})
 
 app.put("/tasks", async (req, res) => {
   try {
@@ -92,7 +107,7 @@ app.get("/", async(req,res)=>{
 })
 
 app.listen(port, ()=>{
-    console.log(`ToDo app is running on PORT : ${process.env.PORT}`)
+    // console.log(`ToDo app is running on PORT : ${process.env.PORT}`)
 })
 
 
